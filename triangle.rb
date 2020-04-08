@@ -13,26 +13,30 @@
 # and
 #   about_triangle_project_2.rb
 #
-# def triangle(a, b, c)
-#   if a == b && a == c    
-#   	return :equilateral
-#   elsif (a == b && a != c) || (a == c && a != b) || (b == c && b != a)          
-#   	return :isosceles     
-#   elsif a != b && b != c && a != c   
-#   	return :scalene
-#   end
-# end
-
 def triangle(a, b, c)
-   args = [a, b, c]
-   if args.uniq.size == 1
-     return :equilateral
-   elsif args.uniq.size == 2
-     return :isosceles
-   elsif args.uniq.size == 3
-     return :scalene
-   end
- end
+  if a <= 0 || b <= 0 || c <= 0
+    raise TriangleError
+  elsif a >= b + c || b >= a + c || c >= a + b
+    raise TriangleError
+  elsif a == b && a == c    
+  	return :equilateral
+  elsif (a == b && a != c) || (a == c && a != b) || (b == c && b != a)          
+  	return :isosceles     
+  elsif a != b && b != c && a != c   
+  	return :scalene
+  end
+end
+
+# def triangle(a, b, c)
+#    args = [a, b, c]
+#    if args.uniq.size == 1
+#      return :equilateral
+#    elsif args.uniq.size == 2
+#      return :isosceles
+#    elsif args.uniq.size == 3
+#      return :scalene
+#    end
+#  end
 
 # def triangle(a, b, c)
 #   [a, b, c].uniq.size == 1 ? :equilateral : [a, b, c].uniq.size == 2 ? :isosceles : :scalene
