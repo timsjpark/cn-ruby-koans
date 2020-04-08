@@ -13,23 +13,31 @@
 # and
 #   about_triangle_project_2.rb
 #
+# def triangle(a, b, c)
+#   if a == b && a == c    
+#   	return :equilateral
+#   elsif (a == b && a != c) || (a == c && a != b) || (b == c && b != a)          
+#   	return :isosceles     
+#   elsif a != b && b != c && a != c   
+#   	return :scalene
+#   end
+# end
+
 def triangle(a, b, c)
-  if a == b and a == c and b == c            # Eqilateral triangle, lines 17-19
-  	return :equilateral
-  end
+   args = [a, b, c]
+   if args.uniq.size == 1
+     return :equilateral
+   elsif args.uniq.size == 2
+     return :isosceles
+   elsif args.uniq.size == 3
+     return :scalene
+   end
+ end
 
-  if a == b and a != c and b != c           # Isosceles triangle, lines 21-25
-  	return :isosceles
-  elsif a == c and a != b and c != b
-  	return :isosceles
-  elsif b == c and b != a and c != a 
-  	return :isosceles      
-  end
+# def triangle(a, b, c)
+#   [a, b, c].uniq.size == 1 ? :equilateral : [a, b, c].uniq.size == 2 ? :isosceles : :scalene
+# end
 
-  if a != b and b != c and a != c    # Scalene triangle, lines 27-30
-  	return :scalene
-  end
-end
 
 # Error class used in part 2.  No need to change this code.
 class TriangleError < StandardError
