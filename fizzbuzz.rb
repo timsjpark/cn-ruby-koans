@@ -11,8 +11,11 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 #
 # You can assume the input is always a positive integer
 
-def fizzbuzz
-  # WRITE CODE IN HERE
+def fizzbuzz(input_int)
+  return "fizzbuzz" if input_int % 3 == 0 && input_int % 5 == 0
+  return "fizz" if input_int % 3 == 0
+  return "buzz" if input_int % 5 == 0
+  return input_int.to_s if input_int.is_a? Integer
 end
 
 class AboutFizzBuzz < Neo::Koan
