@@ -77,6 +77,10 @@ class AboutClasses < Neo::Koan
   class Dog4
     attr_reader :name
 
+    def name
+      @name
+    end
+    
     def set_name(a_name)
       @name = a_name
     end
