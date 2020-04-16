@@ -6,6 +6,24 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 #   code ...
 # end
 
+# class DiceSet
+#   def roll(number_of_rolls)
+#     Array.new(number_of_rolls) { rand(1..6) }
+#   end
+# end
+
+class DiceSet
+  attr_reader :values
+
+  # def values ## reader method - This does  what line 16 (attr_reader :values) does
+  #   @values 
+  # end
+
+  def roll(number_of_dice)
+    @values = Array.new(number_of_dice) { rand(1..6)} ## This does what it is intended to do.
+  end
+end
+
 class AboutDiceProject < Neo::Koan
   def test_can_create_a_dice_set
     dice = DiceSet.new
@@ -34,11 +52,11 @@ class AboutDiceProject < Neo::Koan
   def test_dice_values_should_change_between_rolls
     dice = DiceSet.new
 
-    dice.roll(5)
+    dice.roll(5)                ## Should yield an array that fits this format: [x,x,x,x,x]
     first_time = dice.values
 
     dice.roll(5)
-    second_time = dice.values
+    second_time = dice.values   ## Should also yield an array that fits the format above: [x,x,x,x,x] but should be different because it's random.
 
     assert_not_equal first_time, second_time,
       "Two rolls should not be equal"
