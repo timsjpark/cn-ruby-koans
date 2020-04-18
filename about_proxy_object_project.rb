@@ -12,13 +12,35 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 # missing handler and any other supporting methods.  The specification
 # of the Proxy class is given in the AboutProxyObjectProject koan.
 
+# class Proxy
+
+#   def initialize(target_object)
+#     @object = target_object
+#   end
+
+#   @object.send(:method)
+# end
+
 class Proxy
+  attr_reader :messages
+
   def initialize(target_object)
     @object = target_object
-    # ADD MORE CODE HERE
+    @messages = []
   end
 
-  # WRITE CODE HERE
+  def called?(method_name)
+    @messages.include?(method_name)
+  end
+
+  def number_of_times_called(method_name)
+    @messages.count(method_name)
+  end
+
+  def method_missing(method_name, *args)
+    @messages.push(method_name)
+    @object.send(method_name, *args)
+  end
 end
 
 # The proxy object should pass the following Koan:
@@ -36,11 +58,11 @@ class AboutProxyObjectProject < Neo::Koan
   def test_tv_methods_still_perform_their_function
     tv = Proxy.new(Television.new)
 
-    tv.channel = 10
+    tv.channel = 10                                               
     tv.power
 
-    assert_equal 10, tv.channel
-    assert tv.on?
+    assert_equal 10, tv.channel                                   ## 
+    assert tv.on?                                                 ## 
   end
 
   def test_proxy_records_messages_sent_to_tv
@@ -49,13 +71,13 @@ class AboutProxyObjectProject < Neo::Koan
     tv.power
     tv.channel = 10
 
-    assert_equal [:power, :channel=], tv.messages
+    assert_equal [:power, :channel=], tv.messages                 ## 
   end
 
   def test_proxy_handles_invalid_messages
     tv = Proxy.new(Television.new)
 
-    assert_raise(NoMethodError) do
+    assert_raise(NoMethodError) do                                ##
       tv.no_such_method
     end
   end
@@ -66,8 +88,8 @@ class AboutProxyObjectProject < Neo::Koan
     tv.power
     tv.power
 
-    assert tv.called?(:power)
-    assert ! tv.called?(:channel)
+    assert tv.called?(:power)                                     ##
+    assert ! tv.called?(:channel)                                 ##
   end
 
   def test_proxy_counts_method_calls
@@ -77,9 +99,9 @@ class AboutProxyObjectProject < Neo::Koan
     tv.channel = 48
     tv.power
 
-    assert_equal 2, tv.number_of_times_called(:power)
-    assert_equal 1, tv.number_of_times_called(:channel=)
-    assert_equal 0, tv.number_of_times_called(:on?)
+    assert_equal 2, tv.number_of_times_called(:power)             ##
+    assert_equal 1, tv.number_of_times_called(:channel=)          ##
+    assert_equal 0, tv.number_of_times_called(:on?)     
   end
 
   def test_proxy_can_record_more_than_just_tv_objects
@@ -88,8 +110,8 @@ class AboutProxyObjectProject < Neo::Koan
     proxy.upcase!
     result = proxy.split
 
-    assert_equal ["CODE", "MASH", "2009"], result
-    assert_equal [:upcase!, :split], proxy.messages
+    assert_equal ["CODE", "MASH", "2009"], result                 ##
+    assert_equal [:upcase!, :split], proxy.messages               ##
   end
 end
 
@@ -154,3 +176,33 @@ class TelevisionTest < Neo::Koan
     assert_equal 11, tv.channel
   end
 end
+
+
+
+
+
+
+# class Proxy
+#   attr_accessor :channel
+
+#   def initialize(real_television)
+#     @real_television = real_television
+#     # ADD MORE CODE HERE
+#   end
+
+#   def power
+#     if @power == :on
+#       @power = :off
+#     else 
+#       @power = :on
+#     end
+#   end
+
+#   def on?
+#     @power == :on
+#   end
+
+#   def messages # Writing a method here will allow me to pass 68.
+    
+#   end
+# end
